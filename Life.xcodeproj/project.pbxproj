@@ -1,0 +1,539 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7A122DD21FC1F902002D5035 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A122DD11FC1F902002D5035 /* AppDelegate.m */; };
+		7A122DD51FC1F902002D5035 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A122DD41FC1F902002D5035 /* ViewController.mm */; };
+		7A122DD71FC1F902002D5035 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A122DD61FC1F902002D5035 /* Assets.xcassets */; };
+		7A122DDA1FC1F902002D5035 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A122DD81FC1F902002D5035 /* Main.storyboard */; };
+		7A122DDD1FC1F902002D5035 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A122DDC1FC1F902002D5035 /* main.m */; };
+		7A122DE21FC1F91A002D5035 /* Creature.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A6525AF1F9FB2D2008EFB22 /* Creature.cpp */; };
+		7A122DE41FC1FB86002D5035 /* Map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A122DE31FC1FB86002D5035 /* Map.cpp */; };
+		7A122DE61FC1FCA7002D5035 /* Map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A122DE31FC1FB86002D5035 /* Map.cpp */; };
+		7A122DEE1FC33F0F002D5035 /* LifeUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A122DED1FC33F0F002D5035 /* LifeUITests.m */; };
+		7A122DF51FC33F7B002D5035 /* Creature.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A6525AF1F9FB2D2008EFB22 /* Creature.cpp */; };
+		7A6525A61F9FB016008EFB22 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A6525A51F9FB016008EFB22 /* main.cpp */; };
+		7A6525B01F9FB2D2008EFB22 /* Creature.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A6525AF1F9FB2D2008EFB22 /* Creature.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7A122DF01FC33F0F002D5035 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7A65259A1F9FB016008EFB22 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7A122DCD1FC1F902002D5035;
+			remoteInfo = LifeUI;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7A6525A01F9FB016008EFB22 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		7A122DCE1FC1F902002D5035 /* LifeUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LifeUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7A122DD01FC1F902002D5035 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		7A122DD11FC1F902002D5035 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		7A122DD31FC1F902002D5035 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		7A122DD41FC1F902002D5035 /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
+		7A122DD61FC1F902002D5035 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7A122DD91FC1F902002D5035 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		7A122DDB1FC1F902002D5035 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7A122DDC1FC1F902002D5035 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		7A122DDE1FC1F902002D5035 /* LifeUI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LifeUI.entitlements; sourceTree = "<group>"; };
+		7A122DE31FC1FB86002D5035 /* Map.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Map.cpp; sourceTree = "<group>"; };
+		7A122DE51FC1FBB9002D5035 /* Map.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Map.h; sourceTree = "<group>"; };
+		7A122DEB1FC33F0F002D5035 /* LifeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LifeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7A122DED1FC33F0F002D5035 /* LifeUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LifeUITests.m; sourceTree = "<group>"; };
+		7A122DEF1FC33F0F002D5035 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7A6525A21F9FB016008EFB22 /* Life */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Life; sourceTree = BUILT_PRODUCTS_DIR; };
+		7A6525A51F9FB016008EFB22 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		7A6525AF1F9FB2D2008EFB22 /* Creature.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Creature.cpp; sourceTree = "<group>"; };
+		7A6525B11F9FB2DC008EFB22 /* Creature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Creature.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7A122DCB1FC1F902002D5035 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7A122DE81FC33F0F002D5035 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7A65259F1F9FB016008EFB22 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7A122DCF1FC1F902002D5035 /* LifeUI */ = {
+			isa = PBXGroup;
+			children = (
+				7A122DD01FC1F902002D5035 /* AppDelegate.h */,
+				7A122DD11FC1F902002D5035 /* AppDelegate.m */,
+				7A122DD31FC1F902002D5035 /* ViewController.h */,
+				7A122DD41FC1F902002D5035 /* ViewController.mm */,
+				7A122DD61FC1F902002D5035 /* Assets.xcassets */,
+				7A122DD81FC1F902002D5035 /* Main.storyboard */,
+				7A122DDB1FC1F902002D5035 /* Info.plist */,
+				7A122DDC1FC1F902002D5035 /* main.m */,
+				7A122DDE1FC1F902002D5035 /* LifeUI.entitlements */,
+			);
+			path = LifeUI;
+			sourceTree = "<group>";
+		};
+		7A122DEC1FC33F0F002D5035 /* LifeUITests */ = {
+			isa = PBXGroup;
+			children = (
+				7A122DED1FC33F0F002D5035 /* LifeUITests.m */,
+				7A122DEF1FC33F0F002D5035 /* Info.plist */,
+			);
+			path = LifeUITests;
+			sourceTree = "<group>";
+		};
+		7A6525991F9FB016008EFB22 = {
+			isa = PBXGroup;
+			children = (
+				7A6525A41F9FB016008EFB22 /* Life */,
+				7A122DCF1FC1F902002D5035 /* LifeUI */,
+				7A122DEC1FC33F0F002D5035 /* LifeUITests */,
+				7A6525A31F9FB016008EFB22 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7A6525A31F9FB016008EFB22 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7A6525A21F9FB016008EFB22 /* Life */,
+				7A122DCE1FC1F902002D5035 /* LifeUI.app */,
+				7A122DEB1FC33F0F002D5035 /* LifeUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7A6525A41F9FB016008EFB22 /* Life */ = {
+			isa = PBXGroup;
+			children = (
+				7A6525A51F9FB016008EFB22 /* main.cpp */,
+				7A6525B11F9FB2DC008EFB22 /* Creature.h */,
+				7A6525AF1F9FB2D2008EFB22 /* Creature.cpp */,
+				7A122DE51FC1FBB9002D5035 /* Map.h */,
+				7A122DE31FC1FB86002D5035 /* Map.cpp */,
+			);
+			path = Life;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7A122DCD1FC1F902002D5035 /* LifeUI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7A122DE11FC1F902002D5035 /* Build configuration list for PBXNativeTarget "LifeUI" */;
+			buildPhases = (
+				7A122DCA1FC1F902002D5035 /* Sources */,
+				7A122DCB1FC1F902002D5035 /* Frameworks */,
+				7A122DCC1FC1F902002D5035 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LifeUI;
+			productName = LifeUI;
+			productReference = 7A122DCE1FC1F902002D5035 /* LifeUI.app */;
+			productType = "com.apple.product-type.application";
+		};
+		7A122DEA1FC33F0F002D5035 /* LifeUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7A122DF21FC33F0F002D5035 /* Build configuration list for PBXNativeTarget "LifeUITests" */;
+			buildPhases = (
+				7A122DE71FC33F0F002D5035 /* Sources */,
+				7A122DE81FC33F0F002D5035 /* Frameworks */,
+				7A122DE91FC33F0F002D5035 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7A122DF11FC33F0F002D5035 /* PBXTargetDependency */,
+			);
+			name = LifeUITests;
+			productName = LifeUITests;
+			productReference = 7A122DEB1FC33F0F002D5035 /* LifeUITests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		7A6525A11F9FB016008EFB22 /* Life */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7A6525A91F9FB016008EFB22 /* Build configuration list for PBXNativeTarget "Life" */;
+			buildPhases = (
+				7A65259E1F9FB016008EFB22 /* Sources */,
+				7A65259F1F9FB016008EFB22 /* Frameworks */,
+				7A6525A01F9FB016008EFB22 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Life;
+			productName = Life;
+			productReference = 7A6525A21F9FB016008EFB22 /* Life */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7A65259A1F9FB016008EFB22 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0900;
+				ORGANIZATIONNAME = "Georgel Vintila";
+				TargetAttributes = {
+					7A122DCD1FC1F902002D5035 = {
+						CreatedOnToolsVersion = 9.1;
+						ProvisioningStyle = Automatic;
+					};
+					7A122DEA1FC33F0F002D5035 = {
+						CreatedOnToolsVersion = 9.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 7A122DCD1FC1F902002D5035;
+					};
+					7A6525A11F9FB016008EFB22 = {
+						CreatedOnToolsVersion = 9.0.1;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 7A65259D1F9FB016008EFB22 /* Build configuration list for PBXProject "Life" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 7A6525991F9FB016008EFB22;
+			productRefGroup = 7A6525A31F9FB016008EFB22 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7A6525A11F9FB016008EFB22 /* Life */,
+				7A122DCD1FC1F902002D5035 /* LifeUI */,
+				7A122DEA1FC33F0F002D5035 /* LifeUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7A122DCC1FC1F902002D5035 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A122DD71FC1F902002D5035 /* Assets.xcassets in Resources */,
+				7A122DDA1FC1F902002D5035 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7A122DE91FC33F0F002D5035 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7A122DCA1FC1F902002D5035 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A122DE21FC1F91A002D5035 /* Creature.cpp in Sources */,
+				7A122DE61FC1FCA7002D5035 /* Map.cpp in Sources */,
+				7A122DD51FC1F902002D5035 /* ViewController.mm in Sources */,
+				7A122DDD1FC1F902002D5035 /* main.m in Sources */,
+				7A122DD21FC1F902002D5035 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7A122DE71FC33F0F002D5035 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A122DF51FC33F7B002D5035 /* Creature.cpp in Sources */,
+				7A122DEE1FC33F0F002D5035 /* LifeUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7A65259E1F9FB016008EFB22 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A122DE41FC1FB86002D5035 /* Map.cpp in Sources */,
+				7A6525B01F9FB2D2008EFB22 /* Creature.cpp in Sources */,
+				7A6525A61F9FB016008EFB22 /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7A122DF11FC33F0F002D5035 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7A122DCD1FC1F902002D5035 /* LifeUI */;
+			targetProxy = 7A122DF01FC33F0F002D5035 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		7A122DD81FC1F902002D5035 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7A122DD91FC1F902002D5035 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7A122DDF1FC1F902002D5035 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = LifeUI/LifeUI.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = LifeUI/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gevintila.LifeUI;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		7A122DE01FC1F902002D5035 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = LifeUI/LifeUI.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = LifeUI/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gevintila.LifeUI;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		7A122DF31FC33F0F002D5035 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = LifeUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gevintila.LifeUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LifeUI.app/Contents/MacOS/LifeUI";
+			};
+			name = Debug;
+		};
+		7A122DF41FC33F0F002D5035 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = LifeUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gevintila.LifeUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LifeUI.app/Contents/MacOS/LifeUI";
+			};
+			name = Release;
+		};
+		7A6525A71F9FB016008EFB22 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		7A6525A81F9FB016008EFB22 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		7A6525AA1F9FB016008EFB22 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		7A6525AB1F9FB016008EFB22 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7A122DE11FC1F902002D5035 /* Build configuration list for PBXNativeTarget "LifeUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7A122DDF1FC1F902002D5035 /* Debug */,
+				7A122DE01FC1F902002D5035 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7A122DF21FC33F0F002D5035 /* Build configuration list for PBXNativeTarget "LifeUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7A122DF31FC33F0F002D5035 /* Debug */,
+				7A122DF41FC33F0F002D5035 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7A65259D1F9FB016008EFB22 /* Build configuration list for PBXProject "Life" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7A6525A71F9FB016008EFB22 /* Debug */,
+				7A6525A81F9FB016008EFB22 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7A6525A91F9FB016008EFB22 /* Build configuration list for PBXNativeTarget "Life" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7A6525AA1F9FB016008EFB22 /* Debug */,
+				7A6525AB1F9FB016008EFB22 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7A65259A1F9FB016008EFB22 /* Project object */;
+}
