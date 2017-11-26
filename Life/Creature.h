@@ -13,18 +13,13 @@
 #define MIN(X,Y) (X) < (Y) ? (X) : (Y)
 
 #include <iostream>
+#include "Resource.h"
 
 using namespace std;
 
-extern int foodResources;
-extern int wasteResources;
 
 typedef pair<double, double> MapCoord;
 
-typedef enum  {
-    EatingSourceFood,
-    EatingSourceWaste,
-} EatingSource;
 
 double freezeCurve(MapCoord position,int gen);
 double heatCurve(MapCoord position);
@@ -38,33 +33,35 @@ private:
     int energy;
     int age;
     bool dead = false;
+    bool hungry = false;
     int maxForce;
     char *description;
     int type;
     
-    int *foodSource;
-    int *wasteSource;
-    
     void checkDead();
     void die();
-    EatingSource source;
+    void setType(int type);
+    Resource *resource;
     MapCoord position;
     MapCoord absolutePosition;
     
 public:
     Creature();
-    Creature(int strength, int energy, int force);
+    Creature(int strength, int energy, int force, int type);
     ~Creature();
     char* getDescription();
     int getID();
     bool isDead();
     bool isAdult();
+    bool isHungry();
     void feed();
     void live(bool *canMult);
     
     int getStr();
     int getForce();
     int getType();
+    int getFoodValue();
+
     MapCoord getAbsolutePosition();
     
     void setPosition(MapCoord pos);

@@ -55,17 +55,17 @@ Coord Map::getEmptyNeighbour(int x, int y, int **checkSurface,int str) {
                 double distance = distanceFromPoint(Coord(x-i,y-j));
                 
                 double yValue = (j/(double)height)*2-1;
-                double freezeValue = freezeCurve(MapCoord(0,yValue),(mapSeed/1000)+1);
+                double freezeValue = 1;//freezeCurve(MapCoord(0,yValue),(mapSeed/1000)+1);
 //                double heatValue = heatCurve(MapCoord(0,yValue));
                 double value = valueForCoord(co, checkSurface,2) * freezeValue * distance;
-                if(minValue >= value) {
+                if(minValue > value || !(rand()%3)*(minValue == value)) {
                     minValue = value;
                     move = co;
                 }
-            } else if(!hadFight){
+            } else if(current->isHungry() && !hadFight){
                 Creature *next = getItem(i, j);
                 
-                if(next && !next->isDead() && next->isAdult() && current->isAdult() && !foodResources) {
+                if(next && !next->isDead() && next->isAdult() && current->isAdult() && !current->getFoodValue()) {
                     fight(current,next);
                     hadFight = true;
                 }

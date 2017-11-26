@@ -755,16 +755,26 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ent-ih-JiK">
+                                <rect key="frame" x="845" y="8" width="37" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Label" id="cwe-Ao-iDF">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="UCQ-G9-xcm" secondAttribute="bottom" constant="10" id="1Bt-C7-Ycf"/>
                             <constraint firstAttribute="bottom" secondItem="Yor-bp-FNv" secondAttribute="bottom" constant="20" id="26S-aE-MAB"/>
                             <constraint firstAttribute="trailing" secondItem="UCQ-G9-xcm" secondAttribute="trailing" constant="816" id="2GU-05-woR"/>
+                            <constraint firstAttribute="bottom" secondItem="ent-ih-JiK" secondAttribute="bottom" constant="8" id="42y-MQ-xKD"/>
                             <constraint firstItem="Yor-bp-FNv" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="DOI-Yw-77i"/>
                             <constraint firstItem="UCQ-G9-xcm" firstAttribute="top" secondItem="TPD-UK-Fb4" secondAttribute="bottom" constant="8" id="JgK-30-ysr"/>
                             <constraint firstItem="UCQ-G9-xcm" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="RDQ-FF-OFG"/>
                             <constraint firstItem="TPD-UK-Fb4" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="UT0-ES-j9o"/>
                             <constraint firstItem="KFC-5O-Wei" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="VTN-ot-T5s"/>
+                            <constraint firstAttribute="trailing" secondItem="ent-ih-JiK" secondAttribute="trailing" constant="20" id="cKQ-Ms-z6Z"/>
                             <constraint firstAttribute="bottom" secondItem="ypG-JG-JfK" secondAttribute="bottom" constant="20" id="e8h-Js-u4N"/>
                             <constraint firstItem="Yor-bp-FNv" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ypG-JG-JfK" secondAttribute="trailing" symbolic="YES" id="hqq-rM-pb8"/>
                             <constraint firstItem="ypG-JG-JfK" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="329" id="iM9-0G-Ihy"/>
@@ -776,6 +786,7 @@
                         <outlet property="fitLabel" destination="TPD-UK-Fb4" id="CNm-ba-uDR"/>
                         <outlet property="imageView" destination="KFC-5O-Wei" id="jGo-1V-t2Q"/>
                         <outlet property="popLabel" destination="UCQ-G9-xcm" id="8Rh-eR-LzG"/>
+                        <outlet property="resourcesLabel" destination="ent-ih-JiK" id="xfQ-OF-1cI"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

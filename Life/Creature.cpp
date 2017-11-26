@@ -27,8 +27,7 @@ const int descSize = 100;
 const int freezeValue = 10;
 const int heatValue = 10;
 
-int foodResources = 250000;
-int wasteResources = 100;//1000000;
+
 
 int handleMutation(int value) {
     double strMutation = (rand() % mutationValue) / (double)mutationValue;
@@ -56,38 +55,37 @@ double heatCurve(MapCoord position){
     return 0;
 }
 
+void Creature::setType(int type) {
+    this->type = type;
+    this->resource = resource->resourceOfType((ResourceType)type);
+    
+}
+
 Creature:: Creature() {
 //    srand(randSeed++);
     objId = ++seed;
+    setType(objId - 1);
     
-//    if(objId % 2){
-//        source = EatingSourceWaste;
-//        foodSource = &wasteResources;
-//        wasteSource = &foodResources;
-//    }
-//    else {
-        source = EatingSourceFood;
-        foodSource = &foodResources;
-        wasteSource = &foodResources;
-//    }
     strength = minStrength;
     energy = minEnergy;
     lifeForce = minLifeForce;
     age = 0;
-    (*foodSource) -= energy;
+    resource->updateFoodResource(-energy);
     description = new char[descSize];
     maxForce = lifeForce;
-    type = objId - 1;
+    
 }
 
-Creature::Creature(int strength, int energy, int force = minLifeForce) {
+Creature::Creature(int strength, int energy, int force = minLifeForce, int type = 0) {
     this->objId = ++seed;
     this->strength = strength;
     this->energy = energy;
     this->lifeForce = force;
     this->age = 0;
     this->maxForce = force;
+    setType(type);
     description = new char[descSize];
+
 }
 
 Creature::~Creature() {
@@ -108,14 +106,12 @@ bool Creature::isDead() {
 
 void Creature::multiply(Creature **cr) {
     int nrg = energy/2;
-    *cr = new Creature(strength, nrg, maxForce);
+    *cr = new Creature(strength, nrg, maxForce,type);
     (*cr)->lifeForce = MIN(lifeForce/2, maxForce);
     
-    (*cr)->foodSource = foodSource;
-    (*cr)->wasteSource = wasteSource;
-    (*cr)->source = source;
+    (*cr)->resource = resource;
     mutate(*cr);
-    (*cr)->type = (*cr)->strength / 12;
+//    (*cr)->type = (*cr)->strength / 12;
     energy -= nrg;
     checkDead();
 }
@@ -139,13 +135,23 @@ bool selection(Creature *cr) {
 }
 
 void Creature::feed() {
-    if((*foodSource) <= 0) {
+    if(resource->getFoodResource() <= 0) {
+
         lifeForce --;
-        return;
+        if(lifeForce<maxForce/2){
+            hungry = true;
+//            if(resource->getWasteResource()>0)
+//                setType(1-type);
+        }
+//        if((*foodSource) <= 0)
+            return;
     }
-    int foodAmount = MIN((int)(sqrt(log(fitness(this)))),(*foodSource));
-    (*foodSource) -= foodAmount;
+    double fit = fitness(this);
+    int value = MAX((int)(sqrt(log(fit))),1);
+    int foodAmount = MIN(value,resource->getFoodResource());
+    resource->updateFoodResource(-foodAmount);
     energy += foodAmount;
+    hungry = false;
     lifeForce = MIN(lifeForce + foodAmount, maxForce);
 }
 
@@ -169,9 +175,13 @@ bool Creature::isAdult() {
     return age >= strength/3.0;
 }
 
+bool Creature::isHungry() {
+    return hungry;
+}
+
 void Creature::die() {
     dead = true;
-    (*wasteSource) += energy;
+    resource->updateWasteResource(energy);
     energy = 0;
 }
 
@@ -206,17 +216,21 @@ void fight(Creature *crA, Creature *crB) {
     double fitA = fitness(crA);
     double fitB = fitness(crB);
     if(fitA > fitB) {
+        if(crA->type == crB->type)
+            crA->setType(1-crA->type);
         crA->strength ++;
         crB->die();
         crA->feed();
         
     } else if(fitB > fitA) {
+        if(crA->type == crB->type)
+            crB->setType(1-crB->type);
         crB->strength ++;
         crA ->die();
         crB->feed();
         
     } else {
-        crA ->die();
+        crA->die();
         crB->die();
     }
 }
@@ -225,3 +239,6 @@ MapCoord Creature::getAbsolutePosition(){
     return  absolutePosition;
 }
 
+int Creature::getFoodValue() {
+    return  resource->getFoodResource();
+}

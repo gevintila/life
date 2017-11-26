@@ -33,6 +33,7 @@ static void mark(uint8_t *pixel,uint8_t str, uint8_t frc, uint8_t val)
 @property (nonatomic,weak) IBOutlet NSImageView *imageView;
 @property (nonatomic,weak) IBOutlet NSTextField *popLabel;
 @property (nonatomic,weak) IBOutlet NSTextField *fitLabel;
+@property (nonatomic,weak) IBOutlet NSTextField *resourcesLabel;
 @property (atomic,assign) BOOL stopSim;
 
 @end
@@ -52,9 +53,9 @@ static void mark(uint8_t *pixel,uint8_t str, uint8_t frc, uint8_t val)
     
     if(!map->mapInfo().size())
     {
-        for(int i=0;i<1;i++){
+        for(int i=0;i<2;i++){
             Creature *creature = new Creature();
-            map->setItem(creature, 300, 200);
+            map->setItem(creature, (rand()*51)%700 + 100, 300);
         }
         self.stopSim = NO;
     }
@@ -78,10 +79,12 @@ static void mark(uint8_t *pixel,uint8_t str, uint8_t frc, uint8_t val)
                 Creature *c = map->getFittest();
                 if(!c) {
                     self.stopSim = YES;
+                    [self.resourcesLabel setStringValue:[NSString stringWithFormat:@"%d FOOD\n%d WASTE",getFoodValue() ,getWasteValue()]];
                     return;
                 }
                 [self.fitLabel setStringValue:[NSString stringWithFormat:@"FIT: %s",c->getDescription()]];
                 [self.popLabel setStringValue:[NSString stringWithFormat:@"POP: %d",(int)map->mapInfo().size()]];
+                [self.resourcesLabel setStringValue:[NSString stringWithFormat:@"%d FOOD\n%d WASTE",getFoodValue(),getWasteValue()]];
             });
 
         }
