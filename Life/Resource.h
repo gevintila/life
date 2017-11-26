@@ -10,12 +10,17 @@
 #define Resource_h
 
 typedef enum : int {
-    ResourceTypeFood = 0,
-    ResourceTypeWaste
+    ResourceTypePlant = 0,
+    ResourceTypeHerb,
+    ResourceTypeCarn,
+    ResourceTypeDec,
+    ResourceTypeALL
+    
 } ResourceType;
 
-int getFoodValue();
-int getWasteValue();
+char *getResources();
+void updateLight();
+ResourceType mostWanted();
 
 class Resource {
     int *foodSource;

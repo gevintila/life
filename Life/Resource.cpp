@@ -7,26 +7,64 @@
 //
 
 #include "Resource.h"
-#include <iostream>
-#include <map>
-using namespace std;
+#include "Constants.h"
 
 map<ResourceType,Resource *> resMap = map<ResourceType,Resource*>();
 
-int foodResources = 250000;
-int wasteResources = 250000;
+int lightResources = 300000;
+int plantResources = 0;
+int meatResources = 0;
+int wasteResources = 0;
 int noResources = 0;
 
+char *resDesc;
 
-#pragma mark - Static Functions
+#pragma mark Static Functions
 
-int getFoodValue() {
-    return foodResources;
+char* getResources() {
+   if(!resDesc)
+       resDesc = new char[200];
+    sprintf(resDesc,"%d Light\n%d Plant\n%d Meat\n%d Waste",lightResources,plantResources,meatResources,wasteResources);
+    return resDesc;
 }
 
-int getWasteValue() {
-    return wasteResources;
+ResourceType mostWanted() {
+    int max = lightResources;
+    ResourceType mw = ResourceTypePlant;
+    if(plantResources > max) {
+        max = plantResources;
+        mw = ResourceTypeHerb;
+    }
+    if(meatResources > max) {
+        max = meatResources;
+        mw = ResourceTypeCarn;
+    }
+    if(wasteResources > max) {
+        max = wasteResources;
+        mw = ResourceTypeDec;
+    }
+    return  mw;
 }
+
+void updateLight() {
+    int pValue = (int)(plantResources * resourceDecayValue);
+    plantResources -= pValue;
+    
+    int mValue = (int)(meatResources * resourceDecayValue);
+    meatResources -= mValue;
+    meatResources += pValue;
+    
+    int wValue = (int)(wasteResources * resourceDecayValue);
+    wasteResources -= wValue;
+    wasteResources += mValue;
+    
+    int lValue = (int)(lightResources * resourceDecayValue);
+    lightResources -= lValue;
+    lightResources += wValue;
+    
+    plantResources += lValue;
+}
+
 
 #pragma mark - Constructors
 
@@ -34,14 +72,24 @@ Resource::Resource(ResourceType type) {
     this->type = type;
     
     switch (type) {
-        case ResourceTypeFood: {
-            foodSource = &foodResources;
+        case ResourceTypePlant: {
+            foodSource = &lightResources;
+            wasteSource = &plantResources;
+            break;
+        }
+        case ResourceTypeHerb: {
+            foodSource = &plantResources;
+            wasteSource = &meatResources;
+            break;
+        }
+        case ResourceTypeCarn: {
+            foodSource = &meatResources;
             wasteSource = &wasteResources;
             break;
         }
-        case ResourceTypeWaste: {
+        case ResourceTypeDec: {
             foodSource = &wasteResources;
-            wasteSource = &foodResources;
+            wasteSource = &lightResources;
             break;
         }
         default: {

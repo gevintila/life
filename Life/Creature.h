@@ -9,26 +9,16 @@
 #ifndef Creature_h
 #define Creature_h
 
-#define MAX(X,Y) (X) > (Y) ? (X) : (Y)
-#define MIN(X,Y) (X) < (Y) ? (X) : (Y)
-
-#include <iostream>
 #include "Resource.h"
+#include "Constants.h"
 
-using namespace std;
-
-
-typedef pair<double, double> MapCoord;
-
-
-double freezeCurve(MapCoord position,int gen);
-double heatCurve(MapCoord position);
 
 class Creature {
 
 private:
     int objId = 0;
     int strength;
+    int speed;
     int lifeForce;
     int energy;
     int age;
@@ -37,17 +27,18 @@ private:
     int maxForce;
     char *description;
     int type;
+    int genType;
     
     void checkDead();
-    void die();
+    
     void setType(int type);
     Resource *resource;
-    MapCoord position;
-    MapCoord absolutePosition;
+    NormalCoord position;
+    NormalCoord absolutePosition;
     
 public:
     Creature();
-    Creature(int strength, int energy, int force, int type);
+    Creature(int strength, int energy,int speed, int force, int type);
     ~Creature();
     char* getDescription();
     int getID();
@@ -58,14 +49,16 @@ public:
     void live(bool *canMult);
     
     int getStr();
+    double getSpeed();
     int getForce();
     int getType();
     int getFoodValue();
+    void die();
 
-    MapCoord getAbsolutePosition();
+    NormalCoord getAbsolutePosition();
     
-    void setPosition(MapCoord pos);
-    void setAbsolutePosition(MapCoord pos);
+    void setPosition(NormalCoord pos);
+    void setAbsolutePosition(NormalCoord pos);
     
     void multiply(Creature **cr);
     void friend mutate(Creature *cr);
@@ -73,6 +66,7 @@ public:
     double friend fitness(Creature *cr);
     bool friend selection(Creature *cr);
     void friend fight(Creature *crA, Creature *crB);
+    bool friend shouldFight(Creature *crA, Creature *crB);
     
 };
 

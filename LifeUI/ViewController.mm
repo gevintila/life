@@ -8,8 +8,7 @@
 
 #import "ViewController.h"
 #import <Quartz/Quartz.h>
-#include "Creature.h"
-#include "Map.h"
+#include "Life.h"
 
 
 static const int RED = 3;
@@ -53,9 +52,9 @@ static void mark(uint8_t *pixel,uint8_t str, uint8_t frc, uint8_t val)
     
     if(!map->mapInfo().size())
     {
-        for(int i=0;i<2;i++){
+        for(int i=0;i<1;i++){
             Creature *creature = new Creature();
-            map->setItem(creature, (rand()*51)%700 + 100, 300);
+            map->setItem(creature, 400, 300);
         }
         self.stopSim = NO;
     }
@@ -66,25 +65,26 @@ static void mark(uint8_t *pixel,uint8_t str, uint8_t frc, uint8_t val)
         while (map->mapInfo().size() && !self.stopSim) {
             map->simulate();
 
-            dispatch_async(dispatch_queue_create("que", NULL), ^{
-                usleep(200000);
-                lock = true;
-            });
-            if(lock){
+//            dispatch_async(dispatch_queue_create("que", NULL), ^{
+                usleep(40000);
+//                lock = true;
+//            });
+//            if(lock){
                 image = [self generateImageFromMap:map];
                 lock = false;
-            }
+//            }
             dispatch_sync(dispatch_get_main_queue(), ^{
                 self.imageView.image = image;
                 Creature *c = map->getFittest();
                 if(!c) {
                     self.stopSim = YES;
-                    [self.resourcesLabel setStringValue:[NSString stringWithFormat:@"%d FOOD\n%d WASTE",getFoodValue() ,getWasteValue()]];
+                    [self.resourcesLabel setStringValue:[NSString stringWithFormat:@"%s",getResources()]];
                     return;
                 }
                 [self.fitLabel setStringValue:[NSString stringWithFormat:@"FIT: %s",c->getDescription()]];
                 [self.popLabel setStringValue:[NSString stringWithFormat:@"POP: %d",(int)map->mapInfo().size()]];
-                [self.resourcesLabel setStringValue:[NSString stringWithFormat:@"%d FOOD\n%d WASTE",getFoodValue(),getWasteValue()]];
+                [self.resourcesLabel setStringValue:[NSString stringWithFormat:@"%s",getResources()]];
+                updateLight();
             });
 
         }

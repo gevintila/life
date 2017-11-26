@@ -19,6 +19,8 @@
 		7A122DF51FC33F7B002D5035 /* Creature.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A6525AF1F9FB2D2008EFB22 /* Creature.cpp */; };
 		7A122DF81FCACE5E002D5035 /* Resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A122DF71FCACE5E002D5035 /* Resource.cpp */; };
 		7A122DF91FCAD587002D5035 /* Resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A122DF71FCACE5E002D5035 /* Resource.cpp */; };
+		7A122DFC1FCAE893002D5035 /* Functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A122DFA1FCAE893002D5035 /* Functions.cpp */; };
+		7A122DFF1FCAF493002D5035 /* Functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A122DFA1FCAE893002D5035 /* Functions.cpp */; };
 		7A6525A61F9FB016008EFB22 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A6525A51F9FB016008EFB22 /* main.cpp */; };
 		7A6525B01F9FB2D2008EFB22 /* Creature.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A6525AF1F9FB2D2008EFB22 /* Creature.cpp */; };
 /* End PBXBuildFile section */
@@ -63,6 +65,10 @@
 		7A122DEF1FC33F0F002D5035 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7A122DF61FCACB7F002D5035 /* Resource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Resource.h; sourceTree = "<group>"; };
 		7A122DF71FCACE5E002D5035 /* Resource.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Resource.cpp; sourceTree = "<group>"; };
+		7A122DFA1FCAE893002D5035 /* Functions.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Functions.cpp; sourceTree = "<group>"; };
+		7A122DFB1FCAE893002D5035 /* Functions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Functions.h; sourceTree = "<group>"; };
+		7A122DFD1FCAE96C002D5035 /* Life.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Life.h; sourceTree = "<group>"; };
+		7A122DFE1FCAEA92002D5035 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		7A6525A21F9FB016008EFB22 /* Life */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Life; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A6525A51F9FB016008EFB22 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		7A6525AF1F9FB2D2008EFB22 /* Creature.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Creature.cpp; sourceTree = "<group>"; };
@@ -143,6 +149,10 @@
 			isa = PBXGroup;
 			children = (
 				7A6525A51F9FB016008EFB22 /* main.cpp */,
+				7A122DFD1FCAE96C002D5035 /* Life.h */,
+				7A122DFE1FCAEA92002D5035 /* Constants.h */,
+				7A122DFB1FCAE893002D5035 /* Functions.h */,
+				7A122DFA1FCAE893002D5035 /* Functions.cpp */,
 				7A122DF61FCACB7F002D5035 /* Resource.h */,
 				7A122DF71FCACE5E002D5035 /* Resource.cpp */,
 				7A6525B11F9FB2DC008EFB22 /* Creature.h */,
@@ -276,6 +286,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A122DFF1FCAF493002D5035 /* Functions.cpp in Sources */,
 				7A122DE21FC1F91A002D5035 /* Creature.cpp in Sources */,
 				7A122DE61FC1FCA7002D5035 /* Map.cpp in Sources */,
 				7A122DD51FC1F902002D5035 /* ViewController.mm in Sources */,
@@ -302,6 +313,7 @@
 				7A122DF81FCACE5E002D5035 /* Resource.cpp in Sources */,
 				7A6525B01F9FB2D2008EFB22 /* Creature.cpp in Sources */,
 				7A6525A61F9FB016008EFB22 /* main.cpp in Sources */,
+				7A122DFC1FCAE893002D5035 /* Functions.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -6,12 +6,9 @@
 //  Copyright © 2017 Georgel Vintila. All rights reserved.
 //
 
-#include <iostream>
-#include <map>
-#include "Creature.h"
-#include "Map.h"
 
-#include <stdio.h>
+#include "Life.h?
+
 #include <thread>
 
 using namespace std;

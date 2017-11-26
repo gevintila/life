@@ -9,25 +9,21 @@
 #ifndef Map_h
 #define Map_h
 
-#include <iostream>
-#include <map>
-#include <list>
 #include "Creature.h"
 
-using namespace std;
-
-typedef pair<int, int> Coord;
 typedef map<int,Creature *> MapInfo;
 
 class Map {
     int width;
     int height;
-    int** surface;
-    MapInfo creatureInfo;
-    int valueForCoord(Coord coord, int **surface, int it);
-    Coord getEmptyNeighbour(int x, int y, int **checkSurface,int str);
     bool cancelSimulation;
     int fittest;
+    MapSurface surface;
+    MapInfo creatureInfo;
+    
+    int valueForCoord(MapCoord coord, MapSurface surface);
+    MapCoord getEmptyNeighbour(int x, int y, MapSurface checkSurface,int str);
+    
 public:
     ~Map();
     Map(int width, int height);
@@ -35,14 +31,14 @@ public:
     Creature * getItem(int x, int y);
     void setItem(Creature* item, int x, int y);
     
-    int** getSurface();
+    MapSurface getSurface();
     MapInfo mapInfo();
     
     void simulate();
     void startSimulation();
     void stopSimulation();
     
-    void printSurface(int **);
+    void printSurface(MapSurface);
     void printMap();
     void printMap(MapInfo info);
     
