@@ -19,6 +19,7 @@ typedef enum : int {
 } ResourceType;
 
 char *getResources();
+void setupResources();
 void updateLight();
 ResourceType mostWanted();
 
@@ -32,12 +33,12 @@ class Resource {
 public:
     static Resource* resourceOfType(ResourceType type);
     
-    int getFoodResource();
-    int getWasteResource();
+    int getFoodResource(int screen);
+    int getWasteResource(int screen);
     ResourceType getType();
 
-    void updateFoodResource(int value);
-    void updateWasteResource(int value);
+    void updateFoodResource(int value,int screen);
+    void updateWasteResource(int value,int screen);
 };
 
 

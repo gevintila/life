@@ -52,9 +52,9 @@ static void mark(uint8_t *pixel,uint8_t str, uint8_t frc, uint8_t val)
     
     if(!map->mapInfo().size())
     {
-        for(int i=0;i<1;i++){
+        for(int i=0;i<2;i++){
             Creature *creature = new Creature();
-            map->setItem(creature, 400, 300);
+            map->setItem(creature, (i+1)*150, (i+1)*250);
         }
         self.stopSim = NO;
     }
@@ -65,16 +65,17 @@ static void mark(uint8_t *pixel,uint8_t str, uint8_t frc, uint8_t val)
         while (map->mapInfo().size() && !self.stopSim) {
             map->simulate();
 
-//            dispatch_async(dispatch_queue_create("que", NULL), ^{
+            dispatch_async(dispatch_queue_create("que", NULL), ^{
                 usleep(40000);
-//                lock = true;
-//            });
-//            if(lock){
+                lock = true;
+            });
+            if(lock){
                 image = [self generateImageFromMap:map];
                 lock = false;
-//            }
+            }
             dispatch_sync(dispatch_get_main_queue(), ^{
-                self.imageView.image = image;
+                if(image)
+                    self.imageView.image = image;
                 Creature *c = map->getFittest();
                 if(!c) {
                     self.stopSim = YES;

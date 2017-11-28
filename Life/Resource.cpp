@@ -9,95 +9,78 @@
 #include "Resource.h"
 #include "Constants.h"
 
-map<ResourceType,Resource *> resMap = map<ResourceType,Resource*>();
 
-int lightResources = 300000;
-int plantResources = 0;
-int meatResources = 0;
-int wasteResources = 0;
+typedef map<ResourceType,int *> SourceInfo;
+map<ResourceType,Resource *> resMap = map<ResourceType,Resource*>();
+SourceInfo foodSourceInfo = SourceInfo();
+SourceInfo wasteSourceInfo = SourceInfo();
+
+int lightResources[16] = {80000,80000,80000,80000,0,0,0,0,0,0,0,0,0,0,0,0};
+
 int noResources = 0;
 
 char *resDesc;
 
 #pragma mark Static Functions
 
+void setupResources() {
+    
+    foodSourceInfo.insert({ResourceTypePlant,&lightResources[0]});
+    wasteSourceInfo.insert({ResourceTypeDec,&lightResources[0]});
+    
+    for(int res = 1; res < ResourceTypeALL; res++) {
+
+        foodSourceInfo.insert({(ResourceType)res,&lightResources[res*4]});
+        wasteSourceInfo.insert({(ResourceType)(res-1),&lightResources[res*4]});
+    }
+}
+
 char* getResources() {
    if(!resDesc)
        resDesc = new char[200];
-    sprintf(resDesc,"%d Light\n%d Plant\n%d Meat\n%d Waste",lightResources,plantResources,meatResources,wasteResources);
+    sprintf(resDesc,"%d Light\n%d Plant\n%d Meat\n%d Waste",lightResources[0],lightResources[4],lightResources[8],lightResources[12]);
+    
+//    for(int i=0;i <16;i++) {
+//        cout<<lightResources[i]<<" ";
+//    }
+//    cout<<endl;
     return resDesc;
 }
 
 ResourceType mostWanted() {
-    int max = lightResources;
+    int max = 0;
     ResourceType mw = ResourceTypePlant;
-    if(plantResources > max) {
-        max = plantResources;
-        mw = ResourceTypeHerb;
-    }
-    if(meatResources > max) {
-        max = meatResources;
-        mw = ResourceTypeCarn;
-    }
-    if(wasteResources > max) {
-        max = wasteResources;
-        mw = ResourceTypeDec;
+    
+    for(pair<ResourceType,int *> pair : foodSourceInfo) {
+        if((*pair.second) > max) {
+            max = *pair.second;
+            mw = pair.first;
+        }
     }
     return  mw;
 }
 
 void updateLight() {
-    int pValue = (int)(plantResources * resourceDecayValue);
-    plantResources -= pValue;
-    
-    int mValue = (int)(meatResources * resourceDecayValue);
-    meatResources -= mValue;
-    meatResources += pValue;
-    
-    int wValue = (int)(wasteResources * resourceDecayValue);
-    wasteResources -= wValue;
-    wasteResources += mValue;
-    
-    int lValue = (int)(lightResources * resourceDecayValue);
-    lightResources -= lValue;
-    lightResources += wValue;
-    
-    plantResources += lValue;
+    for(int scr = 0; scr < 4; scr ++) {
+        pair<ResourceType,int *> lastPair = (*foodSourceInfo.rbegin());
+        int transValue = (int)((*(lastPair.second+scr)) * resourceDecayValue);
+        for(pair<ResourceType,int *> pair : foodSourceInfo) {
+            int *res = pair.second+scr;
+            int value = (int)((*res) * resourceDecayValue);
+            *res += transValue - value;
+            transValue = value;
+        }
+    }
 }
-
 
 #pragma mark - Constructors
 
 Resource::Resource(ResourceType type) {
     this->type = type;
     
-    switch (type) {
-        case ResourceTypePlant: {
-            foodSource = &lightResources;
-            wasteSource = &plantResources;
-            break;
-        }
-        case ResourceTypeHerb: {
-            foodSource = &plantResources;
-            wasteSource = &meatResources;
-            break;
-        }
-        case ResourceTypeCarn: {
-            foodSource = &meatResources;
-            wasteSource = &wasteResources;
-            break;
-        }
-        case ResourceTypeDec: {
-            foodSource = &wasteResources;
-            wasteSource = &lightResources;
-            break;
-        }
-        default: {
-            foodSource = &noResources;
-            wasteSource = &noResources;
-            break;
-        }
-    }
+    foodSource = foodSourceInfo.at(type);
+    wasteSource = wasteSourceInfo.at(type);
+    
 }
 
 Resource* Resource::resourceOfType(ResourceType type) {
@@ -117,26 +100,28 @@ ResourceType Resource::getType() {
     return type;
 }
 
-int Resource::getFoodResource() {
-    return (*foodSource);
+int Resource::getFoodResource(int screen) {
+    return *(foodSource + screen);
 }
 
-int Resource::getWasteResource() {
-    return (*wasteSource);
+int Resource::getWasteResource(int screen) {
+    return *(wasteSource + screen);
 }
 
 #pragma mark - Setters
 
-void Resource::updateFoodResource(int value) {
-    if(value < -10000)
-        cout<<value<<endl;
-    (*foodSource) += value;
+void Resource::updateFoodResource(int value,int screen) {
+//    if(screen != 0)
+//        cout<<value<<endl;
+    int * val = (foodSource + screen);
+    *val += value;
 }
 
-void Resource::updateWasteResource(int value) {
-    if(value < -10000)
-        cout<<value<<endl;
-    (*wasteSource) += value;
+void Resource::updateWasteResource(int value,int screen) {
+//    if(screen != 0)
+//        cout<<value<<endl;
+    int * val = (wasteSource + screen);
+    *val += value;
 }
 
 

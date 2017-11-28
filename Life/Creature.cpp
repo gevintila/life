@@ -20,13 +20,14 @@ int seed = 0;
 Creature:: Creature() {
 //    srand(randSeed++);
     objId = ++seed;
-    setType(objId - 1);
+    screen = 0;
+    setType(0);
     speed = minSpeed;
     strength = minStrength;
     energy = minEnergy;
     lifeForce = minLifeForce;
     age = 0;
-    resource->updateFoodResource(-energy);
+    resource->updateFoodResource(-energy,screen);
     description = new char[descSize];
     maxForce = lifeForce;
     
@@ -67,7 +68,7 @@ bool Creature::isDead() {
 }
 
 bool Creature::isAdult() {
-    return age >= strength/(2.0*speed);
+    return age >= 2.0*strength/speed;
 }
 
 bool Creature::isHungry() {
@@ -95,7 +96,7 @@ NormalCoord Creature::getAbsolutePosition(){
 }
 
 int Creature::getFoodValue() {
-    return  resource->getFoodResource();
+    return  resource->getFoodResource(screen);
 }
 
 #pragma mark - Setters
@@ -108,6 +109,9 @@ void Creature::setType(int type) {
 
 void Creature::setPosition(NormalCoord pos) {
     position = pos;
+    int xVal = MAX(ceil(pos.first),0);
+    int yVal = MAX(ceil(pos.second),0);
+    screen = xVal+yVal*2;
 }
 
 void Creature::setAbsolutePosition(NormalCoord pos) {
@@ -116,12 +120,12 @@ void Creature::setAbsolutePosition(NormalCoord pos) {
 
 #pragma mark - Actions
 
-void Creature::multiply(Creature **cr) {
+void Creature::multiply(Creature **cr,NormalCoord pos) {
     int nrg = energy/2;
     *cr = new Creature(strength, nrg,speed, maxForce,genType);
     (*cr)->lifeForce = MIN(lifeForce/2, maxForce);
     
-//    (*cr)->resource = resource;
+    (*cr)->setPosition(pos);
     mutate(*cr);
 //    (*cr)->type = (*cr)->strength / 12;
     energy -= nrg;
@@ -139,7 +143,7 @@ void Creature::live(bool *canMult) {
 }
 
 void Creature::feed() {
-    if(resource->getFoodResource() <= 0) {
+    if(resource->getFoodResource(screen) <= 0) {
         
         lifeForce --;
         if(lifeForce<maxForce/2){
@@ -150,10 +154,10 @@ void Creature::feed() {
         //        if((*foodSource) <= 0)
         return;
     }
-    double fit = fitness(this)/speed;
-    int value = MAX((int)(sqrt(log(fit))),1);
-    int foodAmount = MIN(value,resource->getFoodResource());
-    resource->updateFoodResource(-foodAmount);
+    double fit = fitness(this)*speed;
+    int value = MAX((int)((log(fit))),1);
+    int foodAmount = MIN(value,resource->getFoodResource(screen));
+    resource->updateFoodResource(-foodAmount,screen);
     energy += foodAmount;
     hungry = false;
     lifeForce = MIN(lifeForce + foodAmount, maxForce);
@@ -169,14 +173,14 @@ void Creature::checkDead() {
 
 void Creature::die() {
     dead = true;
-    resource->updateWasteResource(energy);
+    resource->updateWasteResource(energy,screen);
     energy = 0;
 }
 
 #pragma mark - Friends
 
 bool selection(Creature *cr) {
-    int quota = cr->strength/2.0;
+    int quota = 2.0*cr->strength/cr->speed;
     bool canMult = false;
     if(cr->isAdult() && quota && cr->energy >= (3 * quota) + 1)
         canMult = random(quota) < (cr->energy - (3 * quota));
@@ -187,8 +191,8 @@ void mutate(Creature *cr) {
     cr->strength += handleMutation(seed);
     cr->maxForce += handleMutation(seed);
     cr->speed += handleMutation(seed);
-    if(cr->resource->getFoodResource() < 1500 && random(mutationValue) < 10){
-        cr->setType(mostWanted());
+    if(cr->resource->getFoodResource(cr->screen) < 1500 && random(mutationValue) < 10){
+        cr->setType(((cr->type+1)%ResourceTypeALL));
     }
     cr->checkDead();
 }

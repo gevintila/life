@@ -27,6 +27,7 @@ Map::Map(int width, int height) {
     }
     creatureInfo = MapInfo();
     fittest = 1;
+    setupResources();
 }
 
 #pragma mark - Destructor
@@ -151,6 +152,7 @@ MapCoord Map::getEmptyNeighbour(int x, int y, MapSurface checkSurface,int str) {
 void Map::setItem(Creature* item, int x, int y) {
     surface[y][x] = item->getID();
     creatureInfo.insert({item->getID(),item});
+    item->setPosition(MapCoord((double) x/width,(double)y/height));
     item->setAbsolutePosition(MapCoord((double) x,(double)y));
 }
 
@@ -181,15 +183,17 @@ void Map::simulate() {
         if(pair.first == -1) {
             canMultiply = false;
         }
-        if(canMultiply)
-            item->multiply(&offspring);
+        if(canMultiply){
+            NormalCoord coord = NormalCoord((pair.first/(double)width)*2 - 1,(pair.second/(double)height)*2 - 1);
+            item->multiply(&offspring,coord);
+        }
         if(!item->isDead()){
             crInfo.insert({item->getID(),item});
             MapCoord fullCoord = pair;
             if(canMultiply || pair.first == -1)
                 fullCoord = MapCoord(x,y);
             newSurface[fullCoord.second][fullCoord.first] = item->getID();
-            MapCoord coord = MapCoord((fullCoord.first/(double)width)*2 - 1,(fullCoord.second/(double)height)*2 - 1);
+            NormalCoord coord = NormalCoord((fullCoord.first/(double)width)*2 - 1,(fullCoord.second/(double)height)*2 - 1);
             item->setPosition(coord);
             item->setAbsolutePosition(MapCoord((double) fullCoord.first,(double)fullCoord.second));
             double fit = fitness(item);
@@ -204,9 +208,7 @@ void Map::simulate() {
         if(canMultiply && offspring != NULL) {
             crInfo.insert({offspring->getID(),offspring});
             newSurface[pair.second][pair.first] = offspring->getID();
-            
-            MapCoord coord = MapCoord((pair.first/(double)width)*2 - 1,(pair.second/(double)height)*2 - 1);
-            offspring->setPosition(coord);
+
             offspring->setAbsolutePosition(MapCoord((double)pair.first,(double)pair.second));
             double fit = fitness(offspring);
             if(fit > maxFit){

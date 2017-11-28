@@ -28,6 +28,7 @@ private:
     char *description;
     int type;
     int genType;
+    int screen;
     
     void checkDead();
     
@@ -60,7 +61,7 @@ public:
     void setPosition(NormalCoord pos);
     void setAbsolutePosition(NormalCoord pos);
     
-    void multiply(Creature **cr);
+    void multiply(Creature **cr,NormalCoord pos);
     void friend mutate(Creature *cr);
     void friend crossover(Creature *crA, Creature *crB);
     double friend fitness(Creature *cr);
