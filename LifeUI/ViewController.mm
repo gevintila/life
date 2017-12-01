@@ -26,7 +26,7 @@ static void mark(uint8_t *pixel,uint8_t str, uint8_t frc, uint8_t val)
 
 @interface ViewController()
 {
-    Map *map;
+    Engine *engine;
     
 }
 @property (nonatomic,weak) IBOutlet NSImageView *imageView;
@@ -43,18 +43,20 @@ static void mark(uint8_t *pixel,uint8_t str, uint8_t frc, uint8_t val)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    map = new Map(self.imageView.frame.size.width,self.imageView.frame.size.height);
+    MapCoord size = MapCoord(self.imageView.frame.size.width,self.imageView.frame.size.height);
+    Map *map = new Map(size);
+    engine = new Engine(map);
+    
     self.stopSim = YES;
 }
 
 -(IBAction)simulate:(NSButton *)sender {
     
-    if(!map->mapInfo().size())
+    if(!engine->mapInfo().second.size())
     {
-        for(int i=0;i<2;i++){
+        for(int i=0;i<1;i++){
             Creature *creature = new Creature();
-            map->setItem(creature, (i+1)*150, (i+1)*250);
+            engine->setItem(creature, (i+1)*350, (i+1)*250);
         }
         self.stopSim = NO;
     }
@@ -62,28 +64,28 @@ static void mark(uint8_t *pixel,uint8_t str, uint8_t frc, uint8_t val)
     __block bool lock = true;
 //    dispatch_queue_t que = dispatch_queue_create("que", NULL);
     dispatch_async(dispatch_queue_create("queue", NULL), ^{
-        while (map->mapInfo().size() && !self.stopSim) {
-            map->simulate();
-
-            dispatch_async(dispatch_queue_create("que", NULL), ^{
-                usleep(40000);
-                lock = true;
-            });
-            if(lock){
-                image = [self generateImageFromMap:map];
-                lock = false;
-            }
+        while (engine->populationSize() && !self.stopSim) {
+            engine->simulate();
+            usleep(20000);
+//            dispatch_async(dispatch_queue_create("que", NULL), ^{
+//                usleep(40000);
+//                lock = true;
+//            });
+//            if(lock){
+                image = [self generateImageFromMap:engine];
+//                lock = false;
+//            }
             dispatch_sync(dispatch_get_main_queue(), ^{
                 if(image)
                     self.imageView.image = image;
-                Creature *c = map->getFittest();
+                Creature *c = engine->getFittest();
                 if(!c) {
                     self.stopSim = YES;
                     [self.resourcesLabel setStringValue:[NSString stringWithFormat:@"%s",getResources()]];
                     return;
                 }
                 [self.fitLabel setStringValue:[NSString stringWithFormat:@"FIT: %s",c->getDescription()]];
-                [self.popLabel setStringValue:[NSString stringWithFormat:@"POP: %d",(int)map->mapInfo().size()]];
+                [self.popLabel setStringValue:[NSString stringWithFormat:@"POP: %d",(int)engine->populationSize()]];
                 [self.resourcesLabel setStringValue:[NSString stringWithFormat:@"%s",getResources()]];
                 updateLight();
             });
@@ -97,9 +99,11 @@ static void mark(uint8_t *pixel,uint8_t str, uint8_t frc, uint8_t val)
 }
 
 
--(NSImage *)generateImageFromMap:(Map*) map {
+-(NSImage *)generateImageFromMap:(Engine*) engine {
     NSImage *img = nil;
     
+    MapPair mapPair = engine->mapInfo();
+    Map *map = mapPair.first;
     CGSize size = CGSizeMake(map->getWidth(), map->getHeight());
     
     uint32_t *pixels = (uint32_t *)malloc(size.width * size.height * sizeof(uint32_t));
@@ -111,8 +115,8 @@ static void mark(uint8_t *pixel,uint8_t str, uint8_t frc, uint8_t val)
     CGContextRef context = CGBitmapContextCreate(pixels, size.width, size.height, 8, size.width * sizeof(uint32_t), colorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedLast);
     
     
-    int** ptr = map->getSurface();
-    MapInfo crInfo = map->mapInfo();
+    CreatureInfo crInfo = mapPair.second;
+    int** ptr = map->surface;
     for(int i = 0; i < size.width * size.height; i++) {
         uint8_t *rgbaPixel = (uint8_t*)&pixels[i];
         int y = i/(int)size.width;
@@ -131,7 +135,7 @@ static void mark(uint8_t *pixel,uint8_t str, uint8_t frc, uint8_t val)
             mark(rgbaPixel,255,255,255);
         
    }
-    
+    delete map;
     CGImageRef image = CGBitmapContextCreateImage(context);
     
     

@@ -7,7 +7,7 @@
 //
 
 
-#include "Life.h?
+#include "Life.h"
 
 #include <thread>
 
@@ -21,8 +21,8 @@ void runLoop() {
 }
 
 void printList(map<int,Creature *> info) {
-    cout <<endl<<"Resoureces: "<<foodResources<<endl;
-    cout <<"Waste: "<<wasteResources<<endl;
+//    cout <<endl<<"Resoureces: "<<foodResources<<endl;
+//    cout <<"Waste: "<<wasteResources<<endl;
 //    cout <<"Population: "<<maxPop.second<<" Year: "<<maxPop.first<<endl;
     for(pair<int, Creature*> c : info) {
         cout<<c.second->getDescription()<<endl;
@@ -42,8 +42,8 @@ map<int,Creature *> simulate(map<int,Creature *> info) {
         bool canMultiply = false;
         c->live(&canMultiply);
         Creature *cr = NULL;
-        if(canMultiply/*&& (crInfo.size()+info.size()) < 2000*/)
-            c->multiply(&cr);
+//        if(canMultiply/*&& (crInfo.size()+info.size()) < 2000*/)
+//            c->multiply(&cr);
         
         if(!c->isDead())
             crInfo.insert({c->getID(),c});
@@ -71,8 +71,8 @@ int main(int argc, const char * argv[]) {
     // insert code here...
     
 
-    cout<<freezeCurve(MapCoord(0,(299/599.0) *2 -1))<<endl;
-    cout<<freezeCurve(MapCoord(0,(300/599.0) *2 -1))<<endl;
+//    cout<<freezeCurve(MapCoord(0,(299/599.0) *2 -1))<<endl;
+//    cout<<freezeCurve(MapCoord(0,(300/599.0) *2 -1))<<endl;
     
     
 //    Creature *c = new Creature();

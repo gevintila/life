@@ -9,13 +9,15 @@
 #include "Resource.h"
 #include "Constants.h"
 
-
+const int types = 5;
 typedef map<ResourceType,int *> SourceInfo;
 map<ResourceType,Resource *> resMap = map<ResourceType,Resource*>();
 SourceInfo foodSourceInfo = SourceInfo();
 SourceInfo wasteSourceInfo = SourceInfo();
 
-int lightResources[16] = {80000,80000,80000,80000,0,0,0,0,0,0,0,0,0,0,0,0};
+int lightResources[4*types] = {1000000,200000,200000,200000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+
+int space[4] = {15000,5000,5000,5000};
 
 int noResources = 0;
 
@@ -38,7 +40,7 @@ void setupResources() {
 char* getResources() {
    if(!resDesc)
        resDesc = new char[200];
-    sprintf(resDesc,"%d Light\n%d Plant\n%d Meat\n%d Waste",lightResources[0],lightResources[4],lightResources[8],lightResources[12]);
+    sprintf(resDesc,"%d Light\n%d Plant\n%d Meat\n%dNew\n%d Waste",lightResources[0],lightResources[4],lightResources[8],lightResources[12],lightResources[16]);
     
 //    for(int i=0;i <16;i++) {
 //        cout<<lightResources[i]<<" ";
@@ -61,7 +63,7 @@ ResourceType mostWanted() {
 }
 
 void updateLight() {
-    for(int scr = 0; scr < 4; scr ++) {
+    for(int scr = 0; scr < 1; scr ++) {
         pair<ResourceType,int *> lastPair = (*foodSourceInfo.rbegin());
         int transValue = (int)((*(lastPair.second+scr)) * resourceDecayValue);
         for(pair<ResourceType,int *> pair : foodSourceInfo) {
@@ -80,6 +82,7 @@ Resource::Resource(ResourceType type) {
     
     foodSource = foodSourceInfo.at(type);
     wasteSource = wasteSourceInfo.at(type);
+    spaceSource = space;
     
 }
 
@@ -101,29 +104,51 @@ ResourceType Resource::getType() {
 }
 
 int Resource::getFoodResource(int screen) {
-    return *(foodSource + screen);
+    if(screen == -1)
+        return 0;
+    return *(foodSource + 0);
 }
 
 int Resource::getWasteResource(int screen) {
-    return *(wasteSource + screen);
+    if(screen == -1)
+        return 0;
+    return *(wasteSource + 0);
+}
+
+int Resource::getSpaceResource(int screen) {
+    if(screen == -1)
+        return 0;
+    return *(spaceSource + 0);
 }
 
 #pragma mark - Setters
 
 void Resource::updateFoodResource(int value,int screen) {
-//    if(screen != 0)
-//        cout<<value<<endl;
-    int * val = (foodSource + screen);
+    
+    if(screen == -1)
+        return;
+    int * val = (foodSource + 0);
     *val += value;
 }
 
 void Resource::updateWasteResource(int value,int screen) {
-//    if(screen != 0)
-//        cout<<value<<endl;
-    int * val = (wasteSource + screen);
+//    if(*wasteSource>100000)
+//        return;
+    if(screen == -1)
+        return;
+    int * val = (wasteSource + 0);
     *val += value;
 }
 
+void Resource::updateSpaceResource(int oldScreen, int newScreen) {
+    if(oldScreen == newScreen)
+        return;
+    if(oldScreen != -1)
+        *(spaceSource + 0) += 1;
+    if(newScreen != -1)
+        *(spaceSource + 0) -= 1;
+    
+}
 
 
 

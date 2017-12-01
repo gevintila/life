@@ -11,5 +11,6 @@
 
 #include "Creature.h"
 #include "Map.h"
+#include "Engine.h"
 
 #endif /* Life_h */

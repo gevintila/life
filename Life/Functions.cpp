@@ -24,6 +24,18 @@ double heatCurve(NormalCoord position){
     return 0;
 }
 
+double sign(double a){
+    if(a){
+        return a/abs(a);
+    }
+    return 1;
+}
+
+double resourceCurve(NormalCoord pos) {
+    NormalCoord center = NormalCoord(sign(pos.first)*0.5,sign(pos.second)*0.5);
+    return 1/sqrt(pow(center.first, 2) + pow(center.second, 2));
+}
+
 int random(int value) {
     return rand() % value;
 }

@@ -13,6 +13,7 @@ typedef enum : int {
     ResourceTypePlant = 0,
     ResourceTypeHerb,
     ResourceTypeCarn,
+    ResourceTypeOmni,
     ResourceTypeDec,
     ResourceTypeALL
     
@@ -26,6 +27,7 @@ ResourceType mostWanted();
 class Resource {
     int *foodSource;
     int *wasteSource;
+    int *spaceSource;
     
     ResourceType type;
     Resource(ResourceType type);
@@ -35,10 +37,12 @@ public:
     
     int getFoodResource(int screen);
     int getWasteResource(int screen);
+    int getSpaceResource(int screen);
     ResourceType getType();
 
     void updateFoodResource(int value,int screen);
     void updateWasteResource(int value,int screen);
+    void updateSpaceResource(int oldScreen,int newScreen);
 };
 
 

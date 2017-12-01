@@ -22,25 +22,19 @@ Creature:: Creature() {
     objId = ++seed;
     screen = 0;
     setType(0);
-    speed = minSpeed;
-    strength = minStrength;
-    energy = minEnergy;
-    lifeForce = minLifeForce;
+    attributes = Attributes();
     age = 0;
-    resource->updateFoodResource(-energy,screen);
+    resource->updateFoodResource(-attributes.energy,screen);
     description = new char[descSize];
-    maxForce = lifeForce;
+    
     
 }
 
-Creature::Creature(int strength, int energy, int speed, int force = minLifeForce, int type = 0) {
+Creature::Creature(Attributes attrib, int type = 0) {
+    screen = -1;
     this->objId = ++seed;
-    this->strength = strength;
-    this->speed = speed;
-    this->energy = energy;
-    this->lifeForce = force;
     this->age = 0;
-    this->maxForce = force;
+    this->attributes = attrib;
     setType(type);
     description = new char[descSize];
 
@@ -59,7 +53,7 @@ int Creature::getID() {
 }
 
 char* Creature::getDescription() {
-    sprintf(description, "[C(%d): {%3.2f} <%d,%d, %d/%d, %d, %d>]",objId,fitness(this),strength,speed,lifeForce,maxForce,energy,age);
+    sprintf(description, "[C(%d): {%3.2f} <%d,%d, %d/%d, %d, %d>]",objId,fitness(),attributes.strength,attributes.speed,attributes.lifeForce,attributes.maxForce,attributes.energy,age);
     return description;
 }
 
@@ -68,7 +62,7 @@ bool Creature::isDead() {
 }
 
 bool Creature::isAdult() {
-    return age >= 2.0*strength/speed;
+    return age >= 2.0*attributes.strength;
 }
 
 bool Creature::isHungry() {
@@ -76,11 +70,11 @@ bool Creature::isHungry() {
 }
 
 int Creature::getStr() {
-    return strength;
+    return attributes.strength;
 }
 
 int Creature::getForce() {
-    return maxForce;
+    return attributes.maxForce;
 }
 
 int Creature::getType() {
@@ -88,7 +82,7 @@ int Creature::getType() {
 }
 
 double Creature::getSpeed() {
-    return speed;
+    return attributes.speed;
 }
 
 NormalCoord Creature::getAbsolutePosition(){
@@ -97,6 +91,16 @@ NormalCoord Creature::getAbsolutePosition(){
 
 int Creature::getFoodValue() {
     return  resource->getFoodResource(screen);
+}
+
+double Creature::fitness() {
+    if(isDead())
+        return 0.0;
+    int str = attributes.strength;
+    int frc = attributes.lifeForce;
+    int spd = attributes.speed;
+    int nrg = attributes.energy;
+    return sqrt(((str * str) + (frc * frc)) * ageCurve(age, 2*(str+frc)));
 }
 
 #pragma mark - Setters
@@ -108,10 +112,12 @@ void Creature::setType(int type) {
 }
 
 void Creature::setPosition(NormalCoord pos) {
+    int oldScreen = screen;
     position = pos;
     int xVal = MAX(ceil(pos.first),0);
     int yVal = MAX(ceil(pos.second),0);
     screen = xVal+yVal*2;
+    resource->updateSpaceResource(oldScreen, screen);
 }
 
 void Creature::setAbsolutePosition(NormalCoord pos) {
@@ -121,21 +127,23 @@ void Creature::setAbsolutePosition(NormalCoord pos) {
 #pragma mark - Actions
 
 void Creature::multiply(Creature **cr,NormalCoord pos) {
-    int nrg = energy/2;
-    *cr = new Creature(strength, nrg,speed, maxForce,genType);
-    (*cr)->lifeForce = MIN(lifeForce/2, maxForce);
-    
+    int nrg = attributes.energy/2;
+    Attributes attrib = attributes;
+    attrib.energy = nrg;
+    *cr = new Creature(attrib,genType);
+    (*cr)->attributes.lifeForce = MIN(attributes.lifeForce/2, attributes.maxForce);
+    attributes.lifeForce = MIN(attributes.lifeForce/2, attributes.maxForce);
     (*cr)->setPosition(pos);
     mutate(*cr);
 //    (*cr)->type = (*cr)->strength / 12;
-    energy -= nrg;
+    attributes.energy -= nrg;
     checkDead();
 }
 
 void Creature::live(bool *canMult) {
     feed();
-    int freezeVal = MAX(freezeCurve(position,age)-heatCurve(position) - sqrt(strength),0);
-    lifeForce -= freezeVal;
+    int freezeVal = MAX(freezeCurve(position,age)-heatCurve(position) - sqrt(attributes.strength),0);
+    attributes.lifeForce -= freezeVal;
     age ++;
     checkDead();
     if(!dead)
@@ -143,10 +151,10 @@ void Creature::live(bool *canMult) {
 }
 
 void Creature::feed() {
-    if(resource->getFoodResource(screen) <= 0) {
+    if(resource->getFoodResource(screen)*resourceCurve(position) <= 0) {
         
-        lifeForce --;
-        if(lifeForce<maxForce/2){
+        attributes.lifeForce --;
+        if(attributes.lifeForce<attributes.maxForce/2){
             hungry = true;
             //            if(resource->getWasteResource()>0)
             //                setType(1-type);
@@ -154,68 +162,66 @@ void Creature::feed() {
         //        if((*foodSource) <= 0)
         return;
     }
-    double fit = fitness(this)*speed;
-    int value = MAX((int)((log(fit))),1);
-    int foodAmount = MIN(value,resource->getFoodResource(screen));
+    double fit = fitness()*attributes.speed;
+    int value = MAX((int)(sqrt((log(fit)))),1);
+    int foodAmount = MIN(value,resource->getFoodResource(screen)*resourceCurve(position));
     resource->updateFoodResource(-foodAmount,screen);
-    energy += foodAmount;
+    attributes.energy += foodAmount;
     hungry = false;
-    lifeForce = MIN(lifeForce + foodAmount, maxForce);
+    attributes.lifeForce = MIN(attributes.lifeForce + foodAmount, attributes.maxForce);
 }
 
 void Creature::checkDead() {
-    double fit = fitness(this);
-    if(strength <= 0 || lifeForce <= 0 || fit <= 0) {
+    double fit = fitness();
+    if(attributes.strength <= 0 || attributes.lifeForce <= 0 || fit <= 0) {
         //        cout<<getDescription()<<"DEAD!"<<endl;
         die();
     }
 }
 
 void Creature::die() {
+    if(!dead)
+        resource->updateSpaceResource(screen, -1);
     dead = true;
-    resource->updateWasteResource(energy,screen);
-    energy = 0;
+    resource->updateWasteResource(attributes.energy,screen);
+    attributes.energy = 0;
+   
 }
 
 #pragma mark - Friends
 
 bool selection(Creature *cr) {
-    int quota = 2.0*cr->strength/cr->speed;
+    if(cr->resource->getSpaceResource(cr->screen)<=0)
+        return false;
+    int quota = 2.0*cr->attributes.strength/cr->attributes.speed;
     bool canMult = false;
-    if(cr->isAdult() && quota && cr->energy >= (3 * quota) + 1)
-        canMult = random(quota) < (cr->energy - (3 * quota));
+    if(cr->isAdult() && quota && cr->attributes.energy >= (3 * quota) + 1)
+        canMult = random(quota) < (cr->attributes.energy - (3 * quota));
     return canMult;
 }
 
 void mutate(Creature *cr) {
-    cr->strength += handleMutation(seed);
-    cr->maxForce += handleMutation(seed);
-    cr->speed += handleMutation(seed);
+    cr->attributes.strength += handleMutation(seed);
+    cr->attributes.maxForce += handleMutation(seed);
+    cr->attributes.speed += handleMutation(seed);
     if(cr->resource->getFoodResource(cr->screen) < 1500 && random(mutationValue) < 10){
         cr->setType(((cr->type+1)%ResourceTypeALL));
     }
     cr->checkDead();
 }
 
-double fitness(Creature *cr) {
-    if(cr->isDead())
-        return 0.0;
-    int str = cr->strength;
-    int nrg = cr->lifeForce;
-    int spd = cr->speed;
-    return sqrt(((str * str) + (nrg * nrg) + (spd * spd)) * ageCurve(cr->age, 2*(str+nrg)));
-}
+
 
 void fight(Creature *crA, Creature *crB) {
-    double fitA = fitness(crA);
-    double fitB = fitness(crB);
+    double fitA = crA->fitness();
+    double fitB = crB->fitness();
     if(fitA > fitB) {
-        crA->lifeForce -= crB->lifeForce;
+        crA->attributes.lifeForce -= crB->attributes.lifeForce;
 //        crA->strength++;
         crB->die();
         crA->feed();
     } else if(fitB > fitA) {
-        crB->lifeForce -= crA->lifeForce;
+        crB->attributes.lifeForce -= crA->attributes.lifeForce;
 //        crB->strength++;
         crA ->die();
         crB->feed();
@@ -228,12 +234,12 @@ void fight(Creature *crA, Creature *crB) {
 bool shouldFight(Creature *crA, Creature *crB){
     if(!crB)
         return false;
-    bool otherCanFight = crB && !crB->isDead() && crB->isAdult();
-    bool currentCanFight = crA->isAdult() && crA->isHungry();
+    bool otherCanFight = crB && !crB->isDead() && crB->age > 2;
+    bool currentCanFight =  crA->isHungry() && crA->age > 2;
     
     int typeA = crA->type;
     int typeB = crB->type;
-    bool enemy = (typeA == (typeB+1)%ResourceTypeALL) || (typeA == typeB && crA->isHungry()) ;
+    bool enemy = true;//(typeA == (typeB+1)%ResourceTypeALL) || (typeA == typeB && crA->isHungry()) ;
     
     
     bool fight = otherCanFight && currentCanFight && enemy;
@@ -241,5 +247,7 @@ bool shouldFight(Creature *crA, Creature *crB){
 }
 
 
-
+bool operator< (Creature& lhs, Creature& rhs) {
+    return lhs.fitness() < rhs.fitness();
+}
 

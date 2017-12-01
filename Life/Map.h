@@ -9,42 +9,29 @@
 #ifndef Map_h
 #define Map_h
 
-#include "Creature.h"
-
-typedef map<int,Creature *> MapInfo;
+#include "Constants.h"
 
 class Map {
     int width;
     int height;
-    bool cancelSimulation;
-    int fittest;
-    MapSurface surface;
-    MapInfo creatureInfo;
-    
-    int valueForCoord(MapCoord coord, MapSurface surface);
-    MapCoord getEmptyNeighbour(int x, int y, MapSurface checkSurface,int str);
-    
+    Map();
 public:
+    MapSurface surface;
+    
     ~Map();
+    Map(MapCoord size);
     Map(int width, int height);
+    Map(MapCoord coord,MapSurface surface);
     
-    Creature * getItem(int x, int y);
-    void setItem(Creature* item, int x, int y);
-    
-    MapSurface getSurface();
-    MapInfo mapInfo();
-    
-    void simulate();
-    void startSimulation();
-    void stopSimulation();
-    
+    Map* copy();
+   
+    int valueForCoord(MapCoord coord);
+   
     void printSurface(MapSurface);
-    void printMap();
-    void printMap(MapInfo info);
-    
+
     int getWidth();
     int getHeight();
-    Creature* getFittest();
+    
 };
 
 

@@ -10,6 +10,7 @@
 #define Creature_h
 
 #include "Resource.h"
+#include "Attributes.h"
 #include "Constants.h"
 
 
@@ -17,14 +18,11 @@ class Creature {
 
 private:
     int objId = 0;
-    int strength;
-    int speed;
-    int lifeForce;
-    int energy;
+    
     int age;
     bool dead = false;
     bool hungry = false;
-    int maxForce;
+    
     char *description;
     int type;
     int genType;
@@ -33,13 +31,14 @@ private:
     void checkDead();
     
     void setType(int type);
+    Attributes attributes;
     Resource *resource;
     NormalCoord position;
     NormalCoord absolutePosition;
     
 public:
     Creature();
-    Creature(int strength, int energy,int speed, int force, int type);
+    Creature(Attributes attrib, int type);
     ~Creature();
     char* getDescription();
     int getID();
@@ -55,7 +54,7 @@ public:
     int getType();
     int getFoodValue();
     void die();
-
+    double fitness();
     NormalCoord getAbsolutePosition();
     
     void setPosition(NormalCoord pos);
@@ -64,11 +63,11 @@ public:
     void multiply(Creature **cr,NormalCoord pos);
     void friend mutate(Creature *cr);
     void friend crossover(Creature *crA, Creature *crB);
-    double friend fitness(Creature *cr);
+    
     bool friend selection(Creature *cr);
     void friend fight(Creature *crA, Creature *crB);
     bool friend shouldFight(Creature *crA, Creature *crB);
-    
+    bool friend operator<(Creature &lhs, Creature &rhs);
 };
 
 
